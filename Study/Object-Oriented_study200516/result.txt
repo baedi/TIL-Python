@@ -1,0 +1,15 @@
+create 3 fruit...
+I am apple!
+
+name : apple
+fresh : 100%
+[Exception :: can't enter private variable.]
+
+protected lv
+
+[Exception :: can't enter private method.]
+EnterTest2 close...
+
+name : apple
+fresh : 100%
+amount : 3
