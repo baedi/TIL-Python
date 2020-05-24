@@ -75,3 +75,6 @@
 
 ### 2020-05-23 (Study\study200523_ListTest2)
 	- 리스트 심층 학습 2
+
+### 2020-05-24 (Study\study200524_PropertyTest)
+	- 프로퍼티 사용 방법
