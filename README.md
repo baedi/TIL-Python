@@ -78,3 +78,6 @@
 
 ### 2020-05-24 (Study\study200524_PropertyTest)
 	- 프로퍼티 사용 방법
+
+### 2020-05-25 (Study\study200525_StaticTest)
+	- Static 메서드 선언 및 사용 방법
