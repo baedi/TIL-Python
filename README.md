@@ -81,3 +81,6 @@
 
 ### 2020-05-25 (Study\study200525_StaticTest)
 	- Static 메서드 선언 및 사용 방법
+
+### 2020-05-26 (Study\study200526_DatetimeTest)
+	- DateTime 학습
