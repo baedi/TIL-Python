@@ -84,3 +84,7 @@
 
 ### 2020-05-26 (Study\study200526_DatetimeTest)
 	- DateTime 학습
+
+### 2020-05-28 (Study\study200527_SocketEcho)
+	- 파이썬 : 소켓 서버 기본 구현 방법
+	- C# : 소켓 클라이언트 기본 구현 방법
