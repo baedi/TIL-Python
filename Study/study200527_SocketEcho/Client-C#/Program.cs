@@ -10,6 +10,7 @@ namespace EchoClient_ {
         /** Variable **/
         static SockClient client;
         static string serverIP;
+        static string message;
 
         /** Main **/
         static void Main(string[] args) {
@@ -22,9 +23,10 @@ namespace EchoClient_ {
             client.Connect();
 
             // Input message                
-            Write("Client : ");
-            client.SendMessage(ReadLine() + "\n");
-
+            do {
+                Write("> "); message = ReadLine();
+                client.SendMessage(message + "\n");
+            } while (!message.Equals(" "));
             client.SocketClose();
         }
 

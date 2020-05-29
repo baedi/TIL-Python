@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Net;
 using System.Net.Sockets;
+using System.Threading;
 
 namespace EchoClient_ {
 
@@ -13,15 +14,17 @@ namespace EchoClient_ {
 
         /** Member Variable **/
         private Socket clientSocket;
-
         private string serverIP;
         private int serverPort;
         private byte[] buffer;
+        private Thread thread;
+
 
         /** Initialization **/
         public SockClient(string ip, int port) {
             serverIP = ip;
             serverPort = port;
+            thread = new Thread(new ThreadStart(ReceiveMessage));
 
             WriteLine("SockClient initialization!");
         }
@@ -42,18 +45,18 @@ namespace EchoClient_ {
 
         /** Send Message **/
         public void SendMessage(string message) {
-
-            // Send message.            
             buffer = Encoding.UTF8.GetBytes(message);
             clientSocket.Send(System.BitConverter.GetBytes(buffer.Length));
             clientSocket.Send(buffer);
+        }
 
 
-            // Receive message.         
-            int ea = clientSocket.Receive(buffer);
-            message = Encoding.UTF8.GetString(buffer, 0, ea);
-            WriteLine("Server : " + message);
-
+        /** Receive Message **/
+        public void ReceiveMessage() {
+            while (true) {
+                int ea = clientSocket.Receive(buffer);
+                WriteLine("Server : " + Encoding.UTF8.GetString(buffer, 0, ea));
+            }
         }
 
 
