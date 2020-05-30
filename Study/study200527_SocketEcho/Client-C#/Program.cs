@@ -27,6 +27,7 @@ namespace EchoClient_ {
                 Write("> "); message = ReadLine();
                 client.SendMessage(message + "\n");
             } while (!message.Equals(" "));
+
             client.SocketClose();
         }
 

@@ -16,15 +16,15 @@ namespace EchoClient_ {
         private Socket clientSocket;
         private string serverIP;
         private int serverPort;
-        private byte[] buffer;
-        private Thread thread;
+        private byte[] receiveBuffer = new byte[1024];
+        private byte[] sendBuffer;
+        private StringBuilder strBuilder = new StringBuilder();
 
 
         /** Initialization **/
         public SockClient(string ip, int port) {
             serverIP = ip;
             serverPort = port;
-            thread = new Thread(new ThreadStart(ReceiveMessage));
 
             WriteLine("SockClient initialization!");
         }
@@ -40,23 +40,29 @@ namespace EchoClient_ {
             WriteLine("Connect...");
             IPEndPoint endPoint = new IPEndPoint(IPAddress.Parse(serverIP), serverPort);
             clientSocket.Connect(endPoint);
+
+            clientSocket.BeginReceive(receiveBuffer, 0, receiveBuffer.Length, SocketFlags.None, ReceiveMessage, this);
         }
 
 
         /** Send Message **/
         public void SendMessage(string message) {
-            buffer = Encoding.UTF8.GetBytes(message);
-            clientSocket.Send(System.BitConverter.GetBytes(buffer.Length));
-            clientSocket.Send(buffer);
+            sendBuffer = Encoding.UTF8.GetBytes(message);
+            clientSocket.Send(System.BitConverter.GetBytes(sendBuffer.Length));
+            clientSocket.Send(sendBuffer);
         }
 
 
         /** Receive Message **/
-        public void ReceiveMessage() {
-            while (true) {
-                int ea = clientSocket.Receive(buffer);
-                WriteLine("Server : " + Encoding.UTF8.GetString(buffer, 0, ea));
-            }
+        public void ReceiveMessage(System.IAsyncResult result) {
+            int size = clientSocket.EndReceive(result);
+            strBuilder.Append(Encoding.UTF8.GetString(receiveBuffer, 0, size));
+
+            WriteLine(strBuilder.ToString());
+            strBuilder.Clear();
+
+            clientSocket.BeginReceive(receiveBuffer, 0, receiveBuffer.Length, SocketFlags.None, ReceiveMessage, this);
+
         }
 
 
